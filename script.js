@@ -2,9 +2,7 @@ let userScore = 0
 let computerScore = 0
 let round = 1
 const totalRounds = 5
-const minRoundToWin =  Math.ceil(totalRounds / 2 )
-
-console.log('Min Rounds to Win ' + minRoundToWin  )
+let roundsLeft = totalRounds
 
 let roundNumber = document.querySelector('.round p')
 roundNumber.textContent = ''.concat(round,'/',totalRounds)
@@ -110,7 +108,6 @@ function getComputerChoice() {
         return computerChoice
     }
 
-
 }
 
 
@@ -213,6 +210,7 @@ function resetGame(){
     userScore = 0
     computerScore = 0
     round = 1
+    roundsLeft = totalRounds
     resetButtons()
     roundNumber.textContent = ''.concat(round,'/',totalRounds)
     userScoreNumber.textContent = userScore
@@ -226,18 +224,18 @@ function resetGame(){
 function finalResult() {
 
     if(userScore > computerScore){
-        resultArea.classList.remove('hidden')
         resultText.style = 'color:green'
         resultText.textContent = 'You won the game!'
     } else if (computerScore > userScore){
-        resultArea.classList.remove('hidden')
         resultText.style = 'color:red'
         resultText.textContent = 'Computer won the game!'
     } else {
-        resultArea.classList.remove('hidden')
+
         resultText.style = 'color:blue'
         resultText.textContent = 'No one won!'
     }
+
+    resultArea.classList.remove('hidden')
 
     userRockButton.disabled = true;
     userPaperButton.removeAttribute('style');
@@ -271,17 +269,25 @@ async function playGame() {
         console.log('Computer score: '+ computerScore);
         console.log('End Round ' + round);
 
+        await aspetta(2000) // aspetta 2s
+
         round +=1;
 
-        console.log('---')
+        // Verifico se un giocatore ha vinto prima della fine di tutti i round
+        roundsLeft -= 1;
+        console.log('Rounds left: ' + roundsLeft)
+        let vantaggio = Math.abs(userScore - computerScore)
+        if( vantaggio > roundsLeft ){
+            resetButtons()
+            updateScore()
+            finalResult()
+            return;
+        }
 
-        await aspetta(2000) // aspetta 2s
+        console.log('---')
         resetButtons()
         updateScore()
 
-        if(userScore >= minRoundToWin || computerScore >= minRoundToWin){
-            finalResult()
-        }
     }
 
     finalResult()
