@@ -12,7 +12,10 @@ userScoreNumber.textContent = userScore
 let computerScoreNumber = document.querySelector('.score-computer p')
 computerScoreNumber.textContent = computerScore
 
+let resultArea = document.querySelector('.result')
+resultArea.classList.add('hidden')
 let resultText = document.querySelector('.result h2')
+
 
 let userRockButton = document.querySelector('.user-rock')
 let userPaperButton = document.querySelector('.user-paper')
@@ -31,7 +34,6 @@ function getUserChoice() {
 
     return new Promise((resolve, reject) => {
         userRockButton.addEventListener('click', function () {
-            userRockButton.style.backgroundColor = 'green'
             userRockButton.style.border = 'solid 2px green'
 
             userPaperButton.disabled = true
@@ -43,7 +45,6 @@ function getUserChoice() {
         })
 
         userPaperButton.addEventListener('click', function () {
-            userPaperButton.style.backgroundColor = 'green'
             userPaperButton.style.border = 'solid 2px green'
 
             userRockButton.disabled = true
@@ -55,7 +56,6 @@ function getUserChoice() {
         })
 
         userScissorButton.addEventListener('click', function () {
-            userScissorButton.style.backgroundColor = 'green'
             userScissorButton.style.border = 'solid 2px green'
 
             userRockButton.disabled = true
@@ -79,7 +79,6 @@ function getComputerChoice() {
         computerChoice = 'rock'
 
         computerRockButton.style.border = 'solid 2px red'
-        computerRockButton.style.backgroundColor = 'red'
 
         computerPaperButton.disabled = true
         computerScissorButton.disabled = true
@@ -89,7 +88,6 @@ function getComputerChoice() {
         computerChoice = 'paper'
 
         computerPaperButton.style.border = 'solid 2px red'
-        computerPaperButton.style.backgroundColor = 'red'
 
         computerRockButton.disabled = true
         computerScissorButton.disabled = true
@@ -99,7 +97,6 @@ function getComputerChoice() {
         computerChoice = 'scissor'
 
         computerScissorButton.style.border = 'solid 2px red'
-        computerScissorButton.style.backgroundColor = 'red'
 
         computerRockButton.disabled = true
         computerPaperButton.disabled = true
@@ -166,6 +163,7 @@ function playRound(userChoice, computerChoice) {
         }
     }
 
+    resultArea.classList.remove('hidden')
     resultText.style = resultTextStyle
     resultText.textContent = resultTextContent
 
@@ -190,6 +188,8 @@ function resetButtons() {
     computerPaperButton.disabled = false;
     computerScissorButton.removeAttribute('style');
     computerScissorButton.disabled = false;
+
+    resultArea.classList.add('hidden')
 }
 
 function updateScore() {
@@ -220,12 +220,15 @@ function resetGame(){
 function finalResult() {
 
     if(userScore > computerScore){
+        resultArea.classList.remove('hidden')
         resultText.style = 'color:green'
         resultText.textContent = 'You won the game!'
     } else if (computerScore > userScore){
+        resultArea.classList.remove('hidden')
         resultText.style = 'color:red'
         resultText.textContent = 'Computer won the game!'
     } else {
+        resultArea.classList.remove('hidden')
         resultText.style = 'color:blue'
         resultText.textContent = 'No one won!'
     }
