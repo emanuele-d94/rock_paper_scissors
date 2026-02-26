@@ -6,6 +6,13 @@
     width: 100%;
 }
 
+.title{
+    text-align: center;
+    border: black solid 1px;
+    width: 500px;
+    padding: 10px;
+    margin: 10px;
+}
 
 .score{
     display: flex;
@@ -84,4 +91,26 @@
     align-items: center;
     gap: 10px;
 }
+
+.result{
+    text-align: center;
+    border: black solid 1px;
+    width: 500px;
+    padding: 10px;
+    margin: 10px;
+    height: 50px;
+}
+
+.play-again{
+    text-align: center;
+    border: black solid 1px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.play-again button{
+    cursor: pointer;
+}
+
+.hidden { display: none; }
 
