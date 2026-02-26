@@ -2,6 +2,9 @@ let userScore = 0
 let computerScore = 0
 let round = 1
 const totalRounds = 5
+const minRoundToWin =  Math.ceil(totalRounds / 2 )
+
+console.log('Min Rounds to Win ' + minRoundToWin  )
 
 let roundNumber = document.querySelector('.round p')
 roundNumber.textContent = ''.concat(round,'/',totalRounds)
@@ -26,6 +29,9 @@ let computerPaperButton = document.querySelector('.computer-paper');
 let computerScissorButton = document.querySelector('.computer-scissor');
 
 let playAgainButton = document.querySelector('.play-again button')
+playAgainButton.addEventListener('click', function () {
+    resetGame()
+})
 
 let playAgainArea = document.querySelector('.play-again')
 playAgainArea.classList.add('hidden')
@@ -42,7 +48,7 @@ function getUserChoice() {
             console.log('User choice: rock');
             resolve('rock')
 
-        })
+        }, { once: true })
 
         userPaperButton.addEventListener('click', function () {
             userPaperButton.style.border = 'solid 2px green'
@@ -53,7 +59,7 @@ function getUserChoice() {
             console.log('User choice: paper');
             resolve('paper')
 
-        })
+        }, { once: true })
 
         userScissorButton.addEventListener('click', function () {
             userScissorButton.style.border = 'solid 2px green'
@@ -64,7 +70,7 @@ function getUserChoice() {
             console.log('User choice: scissor');
             resolve('scissor')
 
-        })
+        }, { once: true })
     })
 
 }
@@ -247,9 +253,6 @@ function finalResult() {
     computerScissorButton.disabled = true;
 
     playAgainArea.classList.remove('hidden');
-    playAgainButton.addEventListener('click', function(){
-        resetGame();
-    })
 
 }
 
@@ -275,11 +278,13 @@ async function playGame() {
         await aspetta(2000) // aspetta 2s
         resetButtons()
         updateScore()
+
+        if(userScore >= minRoundToWin || computerScore >= minRoundToWin){
+            finalResult()
+        }
     }
 
     finalResult()
-
-
 }
 
 
